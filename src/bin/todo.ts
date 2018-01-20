@@ -1,6 +1,6 @@
 import * as commander from 'commander'
 import chalk from 'chalk'
-import notifier from 'update-notifier'
+import * as notifier from 'update-notifier'
 const pkg = require('../../package.json')
 
 const v: string = process.version.match(/\d+/g)[0]
