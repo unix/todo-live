@@ -1,0 +1,29 @@
+
+language: node_js
+
+cache:
+  directories:
+    - "node_modules"
+
+notifications:
+  email:
+    on_success: never
+
+node_js:
+  - 8.6.0
+
+branches:
+  only:
+    - master
+
+before_install: git fetch --depth=100
+
+install:
+  - npm i
+
+script:
+  - /bin/bash build/lint-commits.sh
+  - npm run build
+
+after_success:
+  - npm run cover:hook
