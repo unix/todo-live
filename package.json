@@ -4,9 +4,9 @@
   "description": "a todo list manager in command line",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
-    "cover:local": "./node_modules/.bin/nyc mocha;open coverage/lcov-report/index.html",
-    "cover:hook": "./node_modules/.bin/nyc mocha;cat ./coverage/lcov.info | coveralls",
+    "test": "mocha",
+    "cover:local": "nyc mocha;open coverage/lcov-report/index.html",
+    "cover:hook": "nyc mocha;cat ./coverage/lcov.info | coveralls",
     "commit": "commitizen init cz-conventional-changelog --save --save-exact",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "start": "tsc --lib=es6 ./build/webpack.config.ts && webpack --config ./build/webpack.config.js --progress --watch;npm run clean:tsc",
