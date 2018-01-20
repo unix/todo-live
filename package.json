@@ -9,8 +9,12 @@
     "cover:hook": "./node_modules/.bin/nyc mocha;cat ./coverage/lcov.info | coveralls",
     "commit": "commitizen init cz-conventional-changelog --save --save-exact",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "start": "webpack --config ./build/webpack.config.js --progress --watch",
-    "build": "rm -rf ./dist && webpack --config ./build/webpack.config.js --progress"
+    "start": "tsc --lib=es6 ./build/webpack.config.ts && webpack --config ./build/webpack.config.js --progress --watch;npm run clean:tsc",
+    "build": "tsc --lib es6 ./build/webpack.config.ts && rm -rf ./dist && webpack --config ./build/webpack.config.js --progress;npm run clean:tsc",
+    "clean:tsc": "find build -name '*.js' | xargs rm -f",
+    "clean:cover": "rm -rf coverage .nyc_output",
+    "clean:build": "rm -rf dist",
+    "clean:all": "npm run clean:tsc & npm run clean:cover & npm run clean:build"
   },
   "repository": {
     "type": "git",
@@ -43,6 +47,7 @@
     "@types/mocha": "^2.2.46",
     "@types/node": "^9.3.0",
     "@types/update-notifier": "^2.0.0",
+    "@types/webpack": "^3.8.3",
     "chai": "^4.1.2",
     "commitizen": "^2.9.6",
     "commitlint": "^5.2.5",
@@ -56,8 +61,7 @@
     "tslint": "^5.9.1",
     "tslint-loader": "^3.5.3",
     "typescript": "^2.6.2",
-    "webpack": "^3.10.0",
-    "webpack-merge": "^4.1.1"
+    "webpack": "^3.10.0"
   },
   "dependencies": {
     "chalk": "^2.3.0",

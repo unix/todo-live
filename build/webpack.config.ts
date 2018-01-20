@@ -1,21 +1,25 @@
-const path = require('path')
-const fs = require('fs')
-const webpack = require('webpack')
-const webpackMerge = require('webpack-merge')
+import * as path from 'path'
+import * as fs from 'fs'
+import * as webpack from 'webpack'
+import { promisify } from 'util'
 const lintConfig = require('../tslint.json')
-const promisify = require('util').promisify
 const readDir = promisify(fs.readdir)
-const isDebug = process.env.DEBUG || false
 const manifest = require('../package.json')
 
+export type Externals = {
+  [key: string]: string,
+}
 
 module.exports = (async() => {
-  const externals = Object.keys(manifest.dependencies).reduce((pre, next) =>
+  
+  const externals: Externals = Object.keys(manifest.dependencies).reduce((pre, next) =>
     Object.assign({}, pre, { [next]: `require('${next}')`}), {})
   
-  const entries = await readDir(path.join(__dirname, '../src/bin'))
-  const entryName = fileName => `bin/${fileName.split('.ts')[0]}`
-  const entriesMap = entries.reduce((pre, next) => Object.assign({},
+  const entries: string[] = await readDir(path.join(__dirname, '../src/bin'))
+  
+  const entryName: (f: string) => string = fileName => `bin/${fileName.split('.ts')[0]}`
+  
+  const entriesMap: Externals = entries.reduce((pre, next) => Object.assign({},
     pre, { [entryName(next)]: path.resolve(__dirname, `../src/bin/${next}`) }), {})
   
   const base = {
@@ -23,8 +27,6 @@ module.exports = (async() => {
       path: path.resolve(__dirname, '../dist'),
       filename: '[name].js',
     },
-  
-    devtool: isDebug ? 'source-map' : '',
   
     target: 'node',
   
@@ -41,7 +43,7 @@ module.exports = (async() => {
     },
   
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.ts/,
           enforce: 'pre',
@@ -72,14 +74,12 @@ module.exports = (async() => {
         compress: { warnings: false },
       }),
     ],
-  }
-  
-  const server = {
+    
     entry: entriesMap,
+    
     externals: externals,
-    target: 'node',
+    
   }
   
-  return [webpackMerge(base, server)]
+  return base
 })()
-
