@@ -60,3 +60,7 @@ typings/
 # build
 build/*.js
 
+# store
+.storage/
+
+
