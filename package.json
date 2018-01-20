@@ -69,7 +69,8 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "commander": "^2.13.0",
-    "update-notifier": "^2.3.0"
+    "update-notifier": "^2.3.0",
+    "util.promisify": "^1.0.0"
   },
   "nyc": {
     "include": [
