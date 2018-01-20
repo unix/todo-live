@@ -1,0 +1,95 @@
+{
+  "name": "todo-live",
+  "version": "0.1.0",
+  "description": "a todo list manager in command line",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "cover:local": "nyc mocha;open coverage/lcov-report/index.html",
+    "cover:hook": "nyc mocha;cat ./coverage/lcov.info | coveralls",
+    "commit": "commitizen init cz-conventional-changelog --save --save-exact",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "start": "tsc --lib=es6 ./build/webpack.config.ts && webpack --config ./build/webpack.config.js --progress --watch;npm run clean:tsc",
+    "build": "tsc --lib es6 ./build/webpack.config.ts && rm -rf ./dist && webpack --config ./build/webpack.config.js --progress;npm run clean:tsc",
+    "clean:tsc": "find build -name '*.js' | xargs rm -f",
+    "clean:cover": "rm -rf coverage .nyc_output",
+    "clean:build": "rm -rf dist",
+    "clean:all": "npm run clean:tsc & npm run clean:cover & npm run clean:build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DhyanaChina/todo-live.git"
+  },
+  "keywords": [
+    "todo",
+    "todo-list",
+    "todo-cli",
+    "todo-command-line"
+  ],
+  "author": "WittBulter (nanazuimeng123@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DhyanaChina/todo-live/issues"
+  },
+  "engines": {
+    "node": ">= 6.10"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "homepage": "https://github.com/DhyanaChina/todo-live#readme",
+  "devDependencies": {
+    "@commitlint/config-angular": "^6.0.2",
+    "@types/chai": "^4.1.1",
+    "@types/chalk": "^2.2.0",
+    "@types/mocha": "^2.2.46",
+    "@types/node": "^9.3.0",
+    "@types/update-notifier": "^2.0.0",
+    "@types/webpack": "^3.8.3",
+    "chai": "^4.1.2",
+    "commitizen": "^2.9.6",
+    "commitlint": "^5.2.5",
+    "coveralls": "^3.0.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.3",
+    "mocha": "^5.0.0",
+    "nyc": "^11.4.1",
+    "ts-loader": "^3.2.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "tslint-loader": "^3.5.3",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "commander": "^2.13.0",
+    "update-notifier": "^2.3.0"
+  },
+  "nyc": {
+    "include": [
+      "test/**/*.ts"
+    ],
+    "exclude": [
+      "typings",
+      "**/*.nyc.ts"
+    ],
+    "extension": [
+      ".ts",
+      ".js"
+    ],
+    "require": [
+      "./node_modules/ts-node"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "cache": true,
+    "report-dir": "./coverage",
+    "all": true
+  }
+}
