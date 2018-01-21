@@ -47,6 +47,7 @@
     "@commitlint/config-angular": "^6.0.2",
     "@types/chai": "^4.1.1",
     "@types/chalk": "^2.2.0",
+    "@types/inquirer": "0.0.36",
     "@types/mocha": "^2.2.46",
     "@types/node": "^9.3.0",
     "@types/update-notifier": "^2.0.0",
@@ -69,6 +70,7 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "commander": "^2.13.0",
+    "inquirer": "^5.0.1",
     "update-notifier": "^2.3.0",
     "util.promisify": "^1.0.0"
   },
