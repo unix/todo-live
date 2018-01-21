@@ -15,6 +15,7 @@ notifier({ pkg, updateCheckInterval: 1 }).notify({ isGlobal: true })
 commander
   .version(pkg.version)
   .usage('<command> [options]')
+  .command('add', 'create a task').alias('a')
   .parse(process.argv)
 
   
