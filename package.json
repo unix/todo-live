@@ -2,19 +2,22 @@
   "name": "todo-live",
   "version": "0.1.0",
   "description": "a todo list manager in command line",
-  "main": "index.js",
+  "main": "dist/bin/todo.js",
   "scripts": {
     "test": "mocha",
     "cover:local": "nyc mocha;open coverage/lcov-report/index.html",
     "cover:hook": "nyc mocha;cat ./coverage/lcov.info | coveralls",
     "commit": "commitizen init cz-conventional-changelog --save --save-exact",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "start": "tsc --lib=es6 ./build/webpack.config.ts && webpack --config ./build/webpack.config.js --progress --watch;npm run clean:tsc",
+    "start": "tsc --lib es6 ./build/webpack.config.ts && webpack --config ./build/webpack.config.js --progress --watch;npm run clean:tsc",
     "build": "tsc --lib es6 ./build/webpack.config.ts && rm -rf ./dist && webpack --config ./build/webpack.config.js --progress;npm run clean:tsc",
     "clean:tsc": "find build -name '*.js' | xargs rm -f",
     "clean:cover": "rm -rf coverage .nyc_output",
     "clean:build": "rm -rf dist",
     "clean:all": "npm run clean:tsc & npm run clean:cover & npm run clean:build"
+  },
+  "bin": {
+    "todo": "dist/bin/todo.js"
   },
   "repository": {
     "type": "git",
@@ -66,7 +69,8 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "commander": "^2.13.0",
-    "update-notifier": "^2.3.0"
+    "update-notifier": "^2.3.0",
+    "util.promisify": "^1.0.0"
   },
   "nyc": {
     "include": [

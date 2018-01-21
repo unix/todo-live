@@ -57,3 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
+# build
+build/*.js
+
+# store
+.storage/
+
+
