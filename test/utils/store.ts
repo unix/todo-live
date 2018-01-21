@@ -46,6 +46,13 @@ describe('Storage actions', () => {
     expect(result).to.a('array').lengthOf(0)
   })
   
+  it('should update specified query document', async() => {
+    await TestStore.save({ name: 'will_update', val: 1 })
+    await TestStore.update({ name: 'will_update' }, { val: 2 })
+    const result = await TestStore.findOne({ name: 'will_update' })
+    expect(result).to.a('object').include({ val: 2 })
+  })
+  
   after(() => TestStore.implode())
   
 })

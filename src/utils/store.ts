@@ -15,6 +15,15 @@ export class Store extends StoreBase implements UserStore {
     return contents.filter(v => queryFilters.every(f => f(v)))
   }
   
+  async update(query: StoreQuery, document: any) : Promise<any> {
+    const doc = await this.findOne(query)
+    if (!doc) return
+    const next: any = Object.assign({}, doc, document)
+    const list = await this.findAll()
+    const nextList = list.map(item => item._id === next._id ? next : item)
+    await this.setAll(nextList)
+  }
+  
   async remove(query: StoreQuery): Promise<void> {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return
