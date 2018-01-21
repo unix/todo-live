@@ -1,8 +1,8 @@
 import { StoreBase, UserStore, FileKeyValue, StoreQuery } from './store.base'
 
-export default class Store extends StoreBase implements UserStore {
+export class Store extends StoreBase implements UserStore {
   
-  constructor(database: string) {
+  constructor(database: string = 'test') {
     super(database)
   }
   
@@ -11,7 +11,23 @@ export default class Store extends StoreBase implements UserStore {
     if (!contents || !contents.length) return []
     const queryFilters: Function[] | null = this.parseQuery(query)
     if (!queryFilters) return contents
-    return contents.filter(v => queryFilters(v))
+    return contents.filter(v => queryFilters.every(f => f(v)))
+  }
+  
+  async remove(query: StoreQuery): void {
+    const contents: FileKeyValue[] = await this.getFile()
+    if (!contents || !contents.length) return
+    
+    const queryFilters: Function[] | null = this.parseQuery(query)
+    if (!queryFilters) return
+  
+    const nextContents = contents.map(v => queryFilters.every(f => f(v)) ? null : v)
+      .filter(r => r)
+    await this.setAll(nextContents)
+  }
+  
+  async removeAll(): void {
+    await this.setAll([])
   }
   
   async findAll(): any {
@@ -27,7 +43,7 @@ export default class Store extends StoreBase implements UserStore {
     const queryFilters: Function[] | null = this.parseQuery(query)
     if (!queryFilters) return contents[0]
     
-    const val: any = contents.find(v => queryFilters(v))
+    const val: any = contents.find(v => queryFilters.every(f => f(v)))
     return val || {}
   }
   
@@ -36,7 +52,7 @@ export default class Store extends StoreBase implements UserStore {
     if (!document._id) {
       document._id = Math.random().toString(16).slice(-12)
     }
-    await this.setFile(document)
+    await this.setOne(document)
   }
   
   private parseQuery(query: StoreQuery = {}): Function[] | null {

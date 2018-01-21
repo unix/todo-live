@@ -23,12 +23,12 @@ export interface UserStore {
 
 export class StoreBase {
   
-  readonly root: string = Filter.path(`${__dirname}../../.storage`)
+  readonly root: string = Filter.path(`${__dirname}/../../.storage`)
   private database: string = 'list'
   private url: string
   
   static CheckWorkEnv(root: string): void {
-    !File.exists(root) && File.spawnSync('mkdir', [root])
+    !File.existsSync(root) && File.spawnSync('mkdir', [root])
   }
   
   static queryOperator(oper: string): string {
@@ -48,6 +48,11 @@ export class StoreBase {
     return this
   }
   
+  protected implode(database: string = this.database): void {
+    const path = this.makeBasePath()
+    File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
+  }
+  
   protected async getFile(): FileKeyValue[] {
     try {
       const fileContent: string = await File.readFile(this.url, 'utf-8')
@@ -58,7 +63,7 @@ export class StoreBase {
     }
   }
   
-  protected async setFile(file: FileKeyValue = {}): void {
+  protected async setOne(file: FileKeyValue = {}): void {
     try {
       const files = await this.getFile()
       const fileContent: string = JSON.stringify(files.concat(file))
@@ -67,11 +72,26 @@ export class StoreBase {
     }
   }
   
+  protected async setAll(files: FileKeyValue[]): void {
+    try {
+      const fileContent: string = JSON.stringify(files)
+      await File.writeFile(this.url, fileContent, 'utf-8')
+    } catch (e) {
+    }
+  }
+  
   private init(): void {
-    const path = Filter.path(`${this.root}/todo_live_${this.database}.json`)
-    if (File.exists(path)) return (this.url = path)
+    const path = this.makeBasePath()
+    if (File.exists(path)) {
+      this.url = path
+      return
+    }
     File.spawnSync('touch', [path])
     this.url = path
+  }
+  
+  private makeBasePath(): string {
+    return Filter.path(`${this.root}/todo_live_${this.database}.json`)
   }
   
 }

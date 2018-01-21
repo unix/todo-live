@@ -20,6 +20,7 @@ export default {
   readFile: promisify(fs.readFile),
   writeFile: promisify(fs.writeFile),
   exists: noErrorPromisify(fs.exists),
+  existsSync: fs.existsSync,
   stat: promisify(fs.stat),
   spawnSync: childProcess.spawnSync,
   exec: promisify(childProcess.exec),
