@@ -15,10 +15,10 @@ export type FileKeyValue = {
 }
 
 export interface UserStore {
-  find: (query: StoreQuery) => any[],
-  findOne: (query: StoreQuery) => any,
-  findAll: () => any[],
-  save: (key: string, value: any) => void,
+  find: (query: StoreQuery) => Promise<any[]>,
+  findOne: (query: StoreQuery) => Promise<any>,
+  findAll: () => Promise<any[]>,
+  save: (key: string, value: any) => Promise<void>,
 }
 
 export class StoreBase {
@@ -53,7 +53,7 @@ export class StoreBase {
     File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
   }
   
-  protected async getFile(): FileKeyValue[] {
+  protected async getFile(): Promise<FileKeyValue[]> {
     try {
       const fileContent: string = await File.readFile(this.url, 'utf-8')
       const files: FileKeyValue[] = JSON.parse(fileContent || '[]')
@@ -63,7 +63,7 @@ export class StoreBase {
     }
   }
   
-  protected async setOne(file: FileKeyValue = {}): void {
+  protected async setOne(file: FileKeyValue = {}): Promise<void> {
     try {
       const files = await this.getFile()
       const fileContent: string = JSON.stringify(files.concat(file))
@@ -72,7 +72,7 @@ export class StoreBase {
     }
   }
   
-  protected async setAll(files: FileKeyValue[]): void {
+  protected async setAll(files: FileKeyValue[]): Promise<void> {
     try {
       const fileContent: string = JSON.stringify(files)
       await File.writeFile(this.url, fileContent, 'utf-8')
