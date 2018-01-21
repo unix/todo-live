@@ -63,7 +63,7 @@ export class Store extends StoreBase implements UserStore {
       if (type !== 'object') return v => v[key] && v[key] === queryVal
       const operKey: string = Object.keys(queryVal || {})[0]
       const oper: string = StoreBase.queryOperator(operKey)
-      return v => v[key] && eval(`${v[key]} ${oper} ${queryVal[operKey]}`)
+      return v => v[key] && eval(`${v[key]} ${oper} ${queryVal[operKey]}`) // tslint:disable-line
     })
   }
   
