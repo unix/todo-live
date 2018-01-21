@@ -3,7 +3,7 @@ import Filter from './filter'
 
 export type StoreQueryValue = {
   // query key: $lt, $lte, $gt, $gte, $ne
-  [key: string]: string | number
+  [key: string]: string | number,
 }
 
 export type StoreQuery = {

@@ -10,6 +10,7 @@ export class Store extends StoreBase implements UserStore {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return []
     const queryFilters: Function[] | null = this.parseQuery(query)
+    
     if (!queryFilters) return contents
     return contents.filter(v => queryFilters.every(f => f(v)))
   }
@@ -17,7 +18,6 @@ export class Store extends StoreBase implements UserStore {
   async remove(query: StoreQuery): void {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return
-    
     const queryFilters: Function[] | null = this.parseQuery(query)
     if (!queryFilters) return
   
@@ -39,7 +39,6 @@ export class Store extends StoreBase implements UserStore {
   async findOne(query: StoreQuery): any {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return {}
-    
     const queryFilters: Function[] | null = this.parseQuery(query)
     if (!queryFilters) return contents[0]
     
@@ -49,9 +48,8 @@ export class Store extends StoreBase implements UserStore {
   
   async save(document: any = null): any {
     if (!document) return
-    if (!document._id) {
-      document._id = Math.random().toString(16).slice(-12)
-    }
+    // always cover _id (not check the repeatability of _id)
+    document._id = Math.random().toString(16).slice(-12)
     await this.setOne(document)
   }
   
