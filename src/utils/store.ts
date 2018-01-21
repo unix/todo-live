@@ -6,7 +6,7 @@ export class Store extends StoreBase implements UserStore {
     super(database)
   }
   
-  async find(query: StoreQuery): any[] {
+  async find(query: StoreQuery): Promise<any[]> {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return []
     const queryFilters: Function[] | null = this.parseQuery(query)
@@ -15,7 +15,7 @@ export class Store extends StoreBase implements UserStore {
     return contents.filter(v => queryFilters.every(f => f(v)))
   }
   
-  async remove(query: StoreQuery): void {
+  async remove(query: StoreQuery): Promise<void> {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return
     const queryFilters: Function[] | null = this.parseQuery(query)
@@ -26,17 +26,17 @@ export class Store extends StoreBase implements UserStore {
     await this.setAll(nextContents)
   }
   
-  async removeAll(): void {
+  async removeAll(): Promise<void> {
     await this.setAll([])
   }
   
-  async findAll(): any {
+  async findAll(): Promise<any> {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return []
     return contents
   }
   
-  async findOne(query: StoreQuery): any {
+  async findOne(query: StoreQuery): Promise<any> {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return {}
     const queryFilters: Function[] | null = this.parseQuery(query)
@@ -46,7 +46,7 @@ export class Store extends StoreBase implements UserStore {
     return val || {}
   }
   
-  async save(document: any = null): any {
+  async save(document: any = null): Promise<any> {
     if (!document) return
     // always cover _id (not check the repeatability of _id)
     document._id = Math.random().toString(16).slice(-12)
