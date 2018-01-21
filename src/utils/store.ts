@@ -48,8 +48,9 @@ export class Store extends StoreBase implements UserStore {
   
   async save(document: any = null): Promise<any> {
     if (!document) return
-    // always cover _id (not check the repeatability of _id)
-    document._id = Math.random().toString(16).slice(-12)
+    if (!document._id) {
+      document._id = Math.random().toString(16).slice(-12)
+    }
     await this.setOne(document)
   }
   
