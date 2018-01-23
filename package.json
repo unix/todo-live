@@ -94,11 +94,7 @@
       "text",
       "text-summary"
     ],
-    "lines": 90,
-    "branches": 90,
-    "sourceMap": false,
-    "instrument": false,
-    "cache": true,
+    "cache": false,
     "report-dir": "./coverage",
     "all": true
   }
