@@ -16,6 +16,7 @@ export type TodoItem = {
   status: TodoItemStatus,
   notes?: Note[],
   _id?: string,
+  index: number,
 }
 
 

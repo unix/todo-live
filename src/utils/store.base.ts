@@ -89,7 +89,7 @@ export class StoreBase {
   
   private init(): void {
     const path = this.makeBasePath()
-    if (File.exists(path)) {
+    if (File.existsSync(path)) {
       this.url = path
       return
     }
