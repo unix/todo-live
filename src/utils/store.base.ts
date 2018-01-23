@@ -7,7 +7,7 @@ export type StoreQueryValue = {
 }
 
 export type StoreQuery = {
-  [key: string]: string | StoreQueryValue,
+  [key: string]: string | number | StoreQueryValue,
 }
 
 export type FileKeyValue = {

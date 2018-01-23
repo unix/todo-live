@@ -1,4 +1,4 @@
-import * as chalk from 'chalk'
+import Chalk from 'chalk'
 import * as commander from 'commander'
 import * as inquirer from 'inquirer'
 import Filter from '../utils/filter'
@@ -8,7 +8,6 @@ import {
   DEFAULT_TODO_STATUS_GROUP,
 } from '../utils/constants'
 import { TodoItem } from '../types'
-import * as webpack from 'webpack'
 
 commander
   .option('-e, --edit', 'edit task')
@@ -52,12 +51,12 @@ const showEditor = async(list: TodoItem[]) => {
 
 const showTask = async(index: number) => {
   try {
-    const task: TodoItem = await store.findOne({ index: +index })
+    const task: TodoItem = await store.findOne({ index: index })
     if (!task || !task._id) return await showError()
     const text = task.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
     
-    console.log(chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`))
-    console.log(`${chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(text)} ${task.title}`)
+    console.log(Chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`))
+    console.log(`${Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(text)} ${task.title}`)
     console.log(`  ${task.description}`)
     console.log(' ')
   } catch (e) {
@@ -74,13 +73,13 @@ const showTask = async(index: number) => {
   // show editor screen
   if (edit) return await showEditor(list)
   // show one task
-  if (index) return await showTask(index)
+  if (index) return await showTask(+index)
   
   // show list
   console.log('↓')
   list.forEach(item => {
     // const text = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
-    const level = (<any>chalk).hex(DEFAULT_TODO_LEVEL_COLORS[item.level])(`[${item.index}]`)
+    const level = Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[item.level])(`[${item.index}]`)
     console.log(`${level} ${Filter.strEllipsis(item.title, 20)}`)
     item.description && console.log(`    - ${Filter.strEllipsis(item.description, 40)}`)
   })
