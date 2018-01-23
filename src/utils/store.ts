@@ -45,6 +45,10 @@ export class Store extends StoreBase implements UserStore {
     return contents
   }
   
+  async count(): Promise<number> {
+    return await this.countReg()
+  }
+  
   async findOne(query: StoreQuery): Promise<any> {
     const contents: FileKeyValue[] = await this.getFile()
     if (!contents || !contents.length) return {}

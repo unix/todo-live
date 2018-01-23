@@ -53,6 +53,13 @@ export class StoreBase {
     File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
   }
   
+  protected async countReg(): Promise<number> {
+    const fileContent: string = await File.readFile(this.url, 'utf-8')
+    const count: string[] | null = fileContent.match(/\"\_id\":/g)
+    if (!count) return 0
+    return count.length
+  }
+  
   protected async getFile(): Promise<FileKeyValue[]> {
     try {
       const fileContent: string = await File.readFile(this.url, 'utf-8')
