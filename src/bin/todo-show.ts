@@ -58,6 +58,10 @@ const showTask = async(index: number) => {
     console.log(Chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`))
     console.log(`${Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(text)} ${task.title}`)
     console.log(`  ${task.description}`)
+    if (task.notes && task.notes.length) {
+      console.log(Chalk.hex('#E79627')('TASK NOTES:'))
+      task.notes.forEach(note => console.log(`  ${note}`))
+    }
     console.log(' ')
   } catch (e) {
     return await showError()
