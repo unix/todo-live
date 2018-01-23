@@ -15,6 +15,8 @@ export type TodoItem = {
   level: TodoItemLeveL,
   status: TodoItemStatus,
   notes?: Note[],
+  _id?: string,
+  index: number,
 }
 
 

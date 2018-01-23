@@ -7,7 +7,7 @@ export type StoreQueryValue = {
 }
 
 export type StoreQuery = {
-  [key: string]: string | StoreQueryValue,
+  [key: string]: string | number | StoreQueryValue,
 }
 
 export type FileKeyValue = {
@@ -42,15 +42,22 @@ export class StoreBase {
     this.use(database)
   }
   
+  implode(database: string = this.database): void {
+    const path = this.makeBasePath()
+    File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
+  }
+  
   protected use(database: string): StoreBase {
     this.database = database
     this.init()
     return this
   }
   
-  protected implode(database: string = this.database): void {
-    const path = this.makeBasePath()
-    File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
+  protected async countReg(): Promise<number> {
+    const fileContent: string = await File.readFile(this.url, 'utf-8')
+    const count: string[] | null = fileContent.match(/\"\_id\":/g)
+    if (!count) return 0
+    return count.length
   }
   
   protected async getFile(): Promise<FileKeyValue[]> {
@@ -82,7 +89,7 @@ export class StoreBase {
   
   private init(): void {
     const path = this.makeBasePath()
-    if (File.exists(path)) {
+    if (File.existsSync(path)) {
       this.url = path
       return
     }

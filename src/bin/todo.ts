@@ -16,7 +16,7 @@ commander
   .version(pkg.version)
   .usage('<command> [options]')
   .command('add', 'create a task').alias('a')
+  .command('show', 'show all tasks').alias('s')
+  .command('do', 'do a task').alias('d')
   .parse(process.argv)
-
-  
 
