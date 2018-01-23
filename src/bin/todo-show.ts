@@ -15,6 +15,7 @@ commander
   .parse(process.argv)
 
 const edit = commander.edit || false
+const index = commander.args && commander.args.length && commander.args[0]
 const store = new Store(DEFAULT_DATABASE)
 
 const makeTaskQuestions = (task: TodoItem) => [{
@@ -29,6 +30,8 @@ const makeTaskQuestions = (task: TodoItem) => [{
   name: 'description',
   message: 'description of the task: ',
 }]
+
+const showError = async() => console.log('Nothing needs to do.\n')
 
 const showEditor = async(list: TodoItem[]) => {
   const questions = [{
@@ -47,19 +50,39 @@ const showEditor = async(list: TodoItem[]) => {
   console.log('task updated.\n')
 }
 
+const showTask = async(index: number) => {
+  try {
+    const task: TodoItem = await store.findOne({ index: +index })
+    if (!task || !task._id) return await showError()
+    const text = task.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
+    
+    console.log(chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`))
+    console.log(`${chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(text)} ${task.title}`)
+    console.log(`  ${task.description}`)
+    console.log(' ')
+  } catch (e) {
+    return await showError()
+  }
+}
+
 ;(async() => {
-  const threeDaysTime = +new Date() - (1000 * 60 * 60 * 24) * 3
-  const list: TodoItem[] = await store.find({ createAt: { $gte: threeDaysTime } })
+  // const threeDaysTime = +new Date() - (1000 * 60 * 60 * 24) * 3
+  const list: TodoItem[] = await store.find({})
   
-  if (!list || !list.length) return console.log('Nothing needs to do.\n')
+  // show error
+  if (!list || !list.length) return await showError()
+  // show editor screen
   if (edit) return await showEditor(list)
+  // show one task
+  if (index) return await showTask(index)
   
+  // show list
   console.log('↓')
   list.forEach(item => {
-    const text = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
-    const level = (<any>chalk).hex(DEFAULT_TODO_LEVEL_COLORS[item.level])(text)
+    // const text = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
+    const level = (<any>chalk).hex(DEFAULT_TODO_LEVEL_COLORS[item.level])(`[${item.index}]`)
     console.log(`${level} ${Filter.strEllipsis(item.title, 20)}`)
-    item.description && console.log(`  - ${Filter.strEllipsis(item.description, 40)}`)
+    item.description && console.log(`    - ${Filter.strEllipsis(item.description, 40)}`)
   })
   console.log(' ')
 })()
