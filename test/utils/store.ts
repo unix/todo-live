@@ -53,6 +53,19 @@ describe('Storage actions', () => {
     expect(result).to.a('object').include({ val: 2 })
   })
   
+  it('should return storage count', async() => {
+    TestStore.removeAll()
+    const result1 = await TestStore.count()
+    await TestStore.save({ name: 'hello', val: 1 })
+    const result2 = await TestStore.count()
+    await TestStore.save({ name: 'hello', val: 2 })
+    const result3 = await TestStore.count()
+    expect(result1).to.a('number').eq(0)
+    expect(result2).to.a('number').eq(1)
+    expect(result3).to.a('number').eq(2)
+  })
+  
+  
   after(() => TestStore.implode())
   
 })
