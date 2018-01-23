@@ -42,15 +42,15 @@ export class StoreBase {
     this.use(database)
   }
   
+  implode(database: string = this.database): void {
+    const path = this.makeBasePath()
+    File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
+  }
+  
   protected use(database: string): StoreBase {
     this.database = database
     this.init()
     return this
-  }
-  
-  protected implode(database: string = this.database): void {
-    const path = this.makeBasePath()
-    File.existsSync(path) && File.spawnSync('rm', ['-rf', path])
   }
   
   protected async countReg(): Promise<number> {
