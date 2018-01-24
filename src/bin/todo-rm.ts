@@ -19,7 +19,6 @@ const index = commander.args && commander.args.length && commander.args[0]
   
   if (!index) return console.log(`commander [todo rm] need task id, like: [todo rm 1].\n`)
   const task = await store.findOne({ index: +index })
-  console.log(task)
   if (!task || !task._id) return console.log(`not found task ${index}!\n`)
   
   await removeAndRearrangeTask(task._id)

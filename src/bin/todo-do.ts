@@ -15,7 +15,7 @@ const questions = [{
   type: 'input',
   name: 'note',
   message: 'Do you have any notes? ',
-  suffix: '(enter "done" to solve this task)',
+  suffix: '(enter "done" and done)',
 }]
 ;(async() => {
   if (!index) return console.log(`commander [todo do] need task id, like: [todo do 1]\n`)
