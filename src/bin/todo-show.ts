@@ -26,25 +26,23 @@ const makeTaskQuestions = (task: TodoItem) => [{
   validate: v => !!v,
 }, {
   type: 'editor',
+  default: task.description,
   name: 'description',
   message: 'description of the task: ',
 }]
 
 const showError = async() => console.log('Nothing needs to do.\n')
 
-const showEditor = async(list: TodoItem[]) => {
-  const questions = [{
-    type: 'list',
-    name: 'title',
-    message: 'Select the task to be edited: ',
-    choices: list.map(item => item.title),
-  }]
+const showEditor = async(index: number) => {
   console.log(' ')
-  const answer = await inquirer.prompt(questions)
-  const task: TodoItem = list.find(item => item.title === answer.title)
+  const task: TodoItem = await store.findOne({ index: index })
   const taskQuestions = makeTaskQuestions(task)
-  const taskAnswer = await inquirer.prompt(taskQuestions)
-  const nextTask = Object.assign({}, task, taskAnswer)
+  const answer = await inquirer.prompt(taskQuestions)
+  if (answer.description) {
+    console.log(answer.description)
+    answer.description = answer.description.replace(/\n/g, '. ')
+  }
+  const nextTask = Object.assign({}, task, answer)
   await store.update({ _id: task._id }, nextTask)
   console.log('task updated.\n')
 }
@@ -77,7 +75,7 @@ const showTask = async(index: number) => {
   // show error
   if (!list || !list.length) return await showError()
   // show editor screen
-  if (edit) return await showEditor(list)
+  if (edit && index) return await showEditor(+index)
   // show one task
   if (index) return await showTask(+index)
   
