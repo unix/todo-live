@@ -23,7 +23,7 @@ export interface UserStore {
 
 export class StoreBase {
   
-  readonly root: string = Filter.path(`${__dirname}/../../.storage`)
+  readonly root: string = Filter.path(`${require('os').homedir()}/.storage`)
   private database: string = 'list'
   private url: string
   
