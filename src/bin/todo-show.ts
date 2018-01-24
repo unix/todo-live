@@ -8,6 +8,7 @@ import {
   DEFAULT_TODO_STATUS_GROUP,
 } from '../utils/constants'
 import { TodoItem } from '../types'
+const store = new Store(DEFAULT_DATABASE)
 
 commander
   .option('-e, --edit', 'edit task')
@@ -15,7 +16,6 @@ commander
 
 const edit = commander.edit || false
 const index = commander.args && commander.args.length && commander.args[0]
-const store = new Store(DEFAULT_DATABASE)
 
 const makeTaskQuestions = (task: TodoItem) => [{
   type: 'input',
