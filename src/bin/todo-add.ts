@@ -25,7 +25,7 @@ const questions = [{
 }]
 
 ;(async() => {
-  console.log(`you are creating a task (${pkg.name}@${pkg.version})\n\n`)
+  console.log(`you are creating a task (${pkg.name}@${pkg.version})\n`)
   const store = new Store(DEFAULT_DATABASE)
   const answers = await inquirer.prompt(questions)
   const count: number = await store.count()

@@ -2,6 +2,9 @@ import { StoreBase, UserStore, FileKeyValue, StoreQuery } from './store.base'
 
 export class Store extends StoreBase implements UserStore {
   
+  static IDGenerator(): string {
+    return Math.random().toString(16).slice(-12)
+  }
   constructor(database: string = 'test') {
     super(database)
   }
@@ -61,10 +64,15 @@ export class Store extends StoreBase implements UserStore {
   
   async save(document: any = null): Promise<any> {
     if (!document) return
-    if (!document._id) {
-      document._id = Math.random().toString(16).slice(-12)
-    }
+    document._id = document._id || Store.IDGenerator()
     await this.setOne(document)
+  }
+  async saveAll(documents: any[] = []): Promise<any> {
+    if (!documents || !documents.length) return
+    documents.forEach(item => {
+      item._id = item._id || Store.IDGenerator()
+    })
+    await this.setAll(documents)
   }
   
   private parseQuery(query: StoreQuery = {}): Function[] | null {
