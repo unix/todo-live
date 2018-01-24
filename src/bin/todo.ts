@@ -11,10 +11,10 @@ if (+v < 5) {
   process.exit(1)
 }
 
-notifier({ pkg, updateCheckInterval: 1 }).notify({ isGlobal: true })
+;(<any>notifier)({ pkg, updateCheckInterval: 1 }).notify({ isGlobal: true })
 
 
-commander.outputHelp = done => {
+;(<any>commander).outputHelp = done => {
   done = done || (passthru => passthru)
   process.stdout.write(done(''))
   Log.help()

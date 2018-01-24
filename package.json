@@ -1,6 +1,6 @@
 {
   "name": "todo-live",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a todo list manager in command line",
   "main": "dist/bin/todo.js",
   "scripts": {
