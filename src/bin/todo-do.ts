@@ -37,6 +37,7 @@ const questions = [{
   // append note
   if (note !== 'done') {
     task.notes = task.notes && task.notes.length ? [...task.notes, note] : [note]
+    task.status = DEFAULT_TODO_STATUS_GROUP.solving
     await store.update({ index: +index }, task)
     return console.log(`TASK ${index} updated!\n`)
   }

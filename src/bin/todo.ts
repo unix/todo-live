@@ -19,5 +19,6 @@ commander
   .command('show', 'show all tasks').alias('s')
   .command('do', 'do a task').alias('d')
   .command('rm', 'remove a task').alias('r')
+  .command('log', 'show task history').alias('l')
   .parse(process.argv)
 

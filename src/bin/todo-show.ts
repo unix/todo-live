@@ -53,10 +53,12 @@ const showTask = async(index: number) => {
   try {
     const task: TodoItem = await store.findOne({ index: index })
     if (!task || !task._id) return await showError()
+    const status = Chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`)
     const text = task.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
+    const title = Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(`${text} ${task.title}`)
     
-    console.log(Chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`))
-    console.log(`${Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(text)} ${task.title}`)
+    console.log(status)
+    console.log(title)
     console.log(`  ${task.description}`)
     if (task.notes && task.notes.length) {
       console.log(Chalk.hex('#E79627')('TASK NOTES:'))
