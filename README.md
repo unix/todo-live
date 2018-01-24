@@ -10,7 +10,7 @@
 
 > a todo list manager in  command line.
 
-
+`todo-live` helps you build a simple list of tasks, you can change the state of the task and add notes. For developers, dealing with a task in a command line can help you to focus your attention.
 
 ### Install
 
@@ -67,4 +67,10 @@ npm i -g todo-live
     <summary><b>preview</b> </summary>
     <img src=".github/examples/log.png">
   </details>
+  
+  ### About
+  if you have any ideas and suggestions, please tell me [here](https://github.com/DhyanaChina/todo-live/issues/new).
+  
+  ### LICENSE
+  **MIT**
   
