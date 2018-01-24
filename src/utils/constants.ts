@@ -1,6 +1,7 @@
 import { TodoItemLeveL } from '../types'
 
 export const DEFAULT_DATABASE = 'todo_list'
+export const ARCHIVE_DATABASE = 'todo_archive'
 
 export const enum DEFAULT_TODO_STATUS_GROUP {
   unsolved = 'unsolved',

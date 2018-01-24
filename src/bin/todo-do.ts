@@ -1,5 +1,6 @@
 import { Store } from '../utils/store'
-import { DEFAULT_DATABASE, DEFAULT_TODO_STATUS_GROUP } from '../utils/constants'
+import { removeAndRearrangeTask } from '../core/task'
+import { ARCHIVE_DATABASE, DEFAULT_DATABASE, DEFAULT_TODO_STATUS_GROUP } from '../utils/constants'
 import * as commander from 'commander'
 import * as inquirer from 'inquirer'
 import { TodoItem } from '../types'
@@ -33,14 +34,18 @@ const questions = [{
   
   // show task notes
   const { note } = await inquirer.prompt(questions)
-  // will be solved
-  if (note === 'done') {
-    const next = Object.assign({}, task, { status: DEFAULT_TODO_STATUS_GROUP.solved })
-    await store.update({ index: +index }, next)
-    return console.log(`TASK ${index} has been ${Chalk.hex('#00CD00')('solved')}.\n`)
-  }
   // append note
-  task.notes = task.notes && task.notes.length ? [...task.notes, note] : [note]
-  await store.update({ index: +index }, task)
-  return console.log(`TASK ${index} updated!\n`)
+  if (note !== 'done') {
+    task.notes = task.notes && task.notes.length ? [...task.notes, note] : [note]
+    await store.update({ index: +index }, task)
+    return console.log(`TASK ${index} updated!\n`)
+  }
+  
+  // will be solved
+  const next = Object.assign({}, task, { status: DEFAULT_TODO_STATUS_GROUP.solved })
+  await removeAndRearrangeTask(next._id)
+  // move current task to archive database
+  await new Store(ARCHIVE_DATABASE).save(next)
+  return console.log(`TASK ${index} has been ${Chalk.hex('#00CD00')('solved')}.\n`)
+  
 })()

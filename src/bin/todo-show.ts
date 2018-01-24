@@ -82,9 +82,10 @@ const showTask = async(index: number) => {
   // show list
   console.log('↓')
   list.forEach(item => {
-    // const text = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
-    const level = Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[item.level])(`[${item.index}]`)
-    console.log(`${level} ${Filter.strEllipsis(item.title, 20)}`)
+    const status = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
+    const colorPicker = Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[item.level])
+    const text = colorPicker(`${status} ${item.index} ${Filter.strEllipsis(item.title, 20)}`)
+    console.log(`${text}`)
     item.description && console.log(`    - ${Filter.strEllipsis(item.description, 40)}`)
   })
   console.log(' ')
