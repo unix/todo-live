@@ -50,6 +50,7 @@
     "@types/inquirer": "0.0.36",
     "@types/mocha": "^2.2.46",
     "@types/node": "^9.3.0",
+    "@types/node-notifier": "0.0.28",
     "@types/update-notifier": "^2.0.0",
     "@types/webpack": "^3.8.3",
     "chai": "^4.1.2",
@@ -72,6 +73,7 @@
     "chalk": "^2.3.0",
     "commander": "^2.13.0",
     "inquirer": "^5.0.1",
+    "node-notifier": "^5.2.1",
     "update-notifier": "^2.3.0",
     "util.promisify": "^1.0.0"
   },
