@@ -16,7 +16,8 @@ export const strToTime = (str: string): number => {
   const s = timer.getSeconds()
   const getChildTime = (time: number) => ~~(time % 1 * 60)
   // is hour, not include text
-  if (!Number.isNaN(+str)) {
+  if (!Number.isNaN(+str) || /h/.test(str)) {
+    str = str.replace(/h/g, '')
     const next = +str + h
     timer.setHours(~~next)
     return timer.setMinutes(getChildTime(next) + m)
