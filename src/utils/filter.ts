@@ -16,7 +16,8 @@ export const strToTime = (str: string): number => {
   const s = timer.getSeconds()
   const getChildTime = (time: number) => ~~(time % 1 * 60)
   // is hour, not include text
-  if (!Number.isNaN(+str)) {
+  if (!Number.isNaN(+str) || /h/.test(str)) {
+    str = str.replace(/h/g, '')
     const next = +str + h
     timer.setHours(~~next)
     return timer.setMinutes(getChildTime(next) + m)
@@ -44,10 +45,17 @@ export const strToTime = (str: string): number => {
   return 0
 }
 
+export const notSolveTask = (s: string) => s === DEFAULT_TODO_STATUS_GROUP.solving
+  || s === DEFAULT_TODO_STATUS_GROUP.unsolved
+
+export const isTimeout = (task: TodoItem): boolean => {
+  if (!task.cronTime || !notSolveTask(task.status)) return false
+  const time = +task.cronTime - +new Date()
+  return time < 0
+}
+
 export const colorOfTask = (task: TodoItem): string => {
-  const notSolve = (s: string) => s === DEFAULT_TODO_STATUS_GROUP.solving
-    || s === DEFAULT_TODO_STATUS_GROUP.unsolved
-  if (!task.cronTime || !notSolve(task.status)) return DEFAULT_TODO_LEVEL_COLORS.normal
+  if (!task.cronTime || !notSolveTask(task.status)) return DEFAULT_TODO_LEVEL_COLORS.normal
   
   const time = +task.cronTime - +new Date()
   if (time < 0) return DEFAULT_TODO_LEVEL_COLORS.instant
@@ -64,4 +72,11 @@ export const date = (time: number | string): string => {
   if (!date || Number.isNaN(+d)) return null
   const dateArr: string[] = d.toLocaleString().split(' ')
   return `${dateArr[0].substr(5, 4)}/${dateArr[1].substr(0, 5)}`
+}
+
+export const findScripts = (content: string): string => {
+  if (!content) return null
+  const result: RegExpMatchArray | null = content.match(/bash\[([\w\W]*)\]/)
+  if (!result || !result.length) return null
+  return result[1]
 }

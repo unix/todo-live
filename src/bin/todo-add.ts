@@ -29,14 +29,16 @@ const questions = [{
 ;(async() => {
   console.log(`you are creating a task (${pkg.name}@${pkg.version})\n`)
   const answer = await inquirer.prompt(questions)
-  const cronTime: number = Filter.strToTime(answer.cronTime)
   const count: number = await store.count()
+  const cronTime: number = Filter.strToTime(answer.cronTime)
+  const script: string = Filter.findScripts(answer.description)
   await store.save(Object.assign(answer, {
     createAt: +new Date(),
     status: DEFAULT_TODO_STATUS_GROUP.default,
     index: count + 1,
     description: answer.description || '',
     cronTime,
+    script: script || null,
   }))
 
   try {

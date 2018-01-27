@@ -10,6 +10,9 @@ const taskQueue = (task: TodoItem) => {
       title: `TODO (timeout): ${task.title}`,
       message: task.description || ' ',
     })
+    if (task.script && typeof task.script === 'string' && task.script.length > 2) {
+      require('child_process').execSync(task.script)
+    }
     clearTimeout(timer)
   }, time)
 }

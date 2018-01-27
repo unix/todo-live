@@ -6,6 +6,7 @@ import * as Filter from '../utils/filter'
 import { DEFAULT_DATABASE, DEFAULT_TODO_STATUS_GROUP } from '../utils/constants'
 import { TodoItem } from '../types'
 const store = new Store(DEFAULT_DATABASE)
+const yellow = Chalk.hex('#E79627')
 
 commander
   .option('-e, --edit', 'edit task')
@@ -49,14 +50,17 @@ const showTask = async(index: number) => {
     const task: TodoItem = await store.findOne({ index: index })
     if (!task || !task._id) return await showError()
     const time: string = Filter.date(task.cronTime)
-    const tipsText = `TASK [${index}] ` + (time ? `(limit: ${time})` : '') + ':'
+    const timeStatus = time ? `(limit: ${time})` : ''
+    const showScriptResolved = Filter.findScripts(task.description) && Filter.isTimeout(task)
+    const scriptStatus = showScriptResolved ? yellow('(bash resolved)') : ''
+    const tipsText = `TASK [${index}] ${timeStatus}${scriptStatus}: `
     const title = Chalk.hex(Filter.colorOfTask(task))(`${Filter.symbolOfTask(task)} ${task.title}`)
     
-    console.log(Chalk.hex('#E79627')(tipsText))
+    console.log(yellow(tipsText))
     console.log(title)
     console.log(`  ${task.description}`)
     if (task.notes && task.notes.length) {
-      console.log(Chalk.hex('#E79627')('NOTES:'))
+      console.log(yellow('NOTES:'))
       task.notes.forEach(note => console.log(`  ${note}`))
     }
     console.log(' ')
@@ -81,7 +85,8 @@ const showTask = async(index: number) => {
     const status = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
     const colorPicker = Chalk.hex(Filter.colorOfTask(item))
     const text = colorPicker(`${status} ${item.index} ${Filter.strEllipsis(item.title, 50)}`)
-    console.log(`${text}`)
+    const showScriptResolved = Filter.findScripts(item.description) && Filter.isTimeout(item)
+    console.log(`${text}`, showScriptResolved ? yellow('(bash resolved)') : '')
     item.description && console.log(`    - ${Filter.strEllipsis(item.description, 80)}`)
   })
   console.log(' ')
