@@ -1,12 +1,9 @@
 import Chalk from 'chalk'
 import * as commander from 'commander'
 import * as inquirer from 'inquirer'
-import Filter from '../utils/filter'
 import { Store } from '../utils/store'
-import {
-  DEFAULT_DATABASE, DEFAULT_TODO_LEVEL_COLORS,
-  DEFAULT_TODO_STATUS_GROUP,
-} from '../utils/constants'
+import * as Filter from '../utils/filter'
+import { DEFAULT_DATABASE, DEFAULT_TODO_STATUS_GROUP } from '../utils/constants'
 import { TodoItem } from '../types'
 const store = new Store(DEFAULT_DATABASE)
 
@@ -51,15 +48,15 @@ const showTask = async(index: number) => {
   try {
     const task: TodoItem = await store.findOne({ index: index })
     if (!task || !task._id) return await showError()
-    const status = Chalk.hex('#E79627')(`TASK [${index}] (${task.status}):`)
-    const text = task.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
-    const title = Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[task.level])(`${text} ${task.title}`)
+    const time: string = Filter.date(task.cronTime)
+    const tipsText = `TASK [${index}] ` + (time ? `(limit: ${time})` : '') + ':'
+    const title = Chalk.hex(Filter.colorOfTask(task))(`${Filter.symbolOfTask(task)} ${task.title}`)
     
-    console.log(status)
+    console.log(Chalk.hex('#E79627')(tipsText))
     console.log(title)
     console.log(`  ${task.description}`)
     if (task.notes && task.notes.length) {
-      console.log(Chalk.hex('#E79627')('TASK NOTES:'))
+      console.log(Chalk.hex('#E79627')('NOTES:'))
       task.notes.forEach(note => console.log(`  ${note}`))
     }
     console.log(' ')
@@ -69,7 +66,6 @@ const showTask = async(index: number) => {
 }
 
 ;(async() => {
-  // const threeDaysTime = +new Date() - (1000 * 60 * 60 * 24) * 3
   const list: TodoItem[] = await store.find({})
   
   // show error
@@ -83,7 +79,7 @@ const showTask = async(index: number) => {
   console.log('↓')
   list.forEach(item => {
     const status = item.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
-    const colorPicker = Chalk.hex(DEFAULT_TODO_LEVEL_COLORS[item.level])
+    const colorPicker = Chalk.hex(Filter.colorOfTask(item))
     const text = colorPicker(`${status} ${item.index} ${Filter.strEllipsis(item.title, 50)}`)
     console.log(`${text}`)
     item.description && console.log(`    - ${Filter.strEllipsis(item.description, 80)}`)

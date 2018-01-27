@@ -14,15 +14,15 @@ const makeNoPromisify: Function = (): Function => {
 }
 const noErrorPromisify: Function = makeNoPromisify()
 
-export default {
-  readdir: promisify(fs.readdir),
-  mkdir: promisify(fs.mkdir),
-  readFile: promisify(fs.readFile),
-  writeFile: promisify(fs.writeFile),
-  exists: noErrorPromisify(fs.exists),
-  existsSync: fs.existsSync,
-  stat: promisify(fs.stat),
-  spawnSync: childProcess.spawnSync,
-  exec: promisify(childProcess.exec),
-}
+
+export const readdir = promisify(fs.readdir)
+export const mkdir = promisify(fs.mkdir)
+export const readFile = promisify(fs.readFile)
+export const writeFile = promisify(fs.writeFile)
+export const exists = noErrorPromisify(fs.exists)
+export const existsSync = fs.existsSync
+export const stat = promisify(fs.stat)
+export const spawnSync = childProcess.spawnSync
+export const exec = promisify(childProcess.exec)
+export const fork = childProcess.fork
 

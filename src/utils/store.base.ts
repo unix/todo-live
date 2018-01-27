@@ -1,5 +1,5 @@
-import File from './file'
-import Filter from './filter'
+import * as File from './file'
+import * as Filter from './filter'
 
 export type StoreQueryValue = {
   // query key: $lt, $lte, $gt, $gte, $ne
@@ -23,7 +23,7 @@ export interface UserStore {
 
 export class StoreBase {
   
-  readonly root: string = Filter.path(`${require('os').homedir()}/.storage`)
+  readonly root: string = Filter.path(`${require('os').homedir()}/.todo-live`)
   private database: string = 'list'
   private url: string
   

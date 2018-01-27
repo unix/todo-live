@@ -10,3 +10,5 @@ export const removeAndRearrangeTask = async(id: string) => {
   await store.removeAll()
   await store.saveAll(tasks.map((t, i) => Object.assign(t, { index: i + 1 })))
 }
+
+

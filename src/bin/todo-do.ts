@@ -1,9 +1,10 @@
 import { Store } from '../utils/store'
 import { removeAndRearrangeTask } from '../core/task'
 import { ARCHIVE_DATABASE, DEFAULT_DATABASE, DEFAULT_TODO_STATUS_GROUP } from '../utils/constants'
+import { TodoItem } from '../types'
 import * as commander from 'commander'
 import * as inquirer from 'inquirer'
-import { TodoItem } from '../types'
+import * as Filter from '../utils/filter'
 import Chalk from 'chalk'
 const store = new Store(DEFAULT_DATABASE)
 
@@ -23,10 +24,9 @@ const questions = [{
   if (!task || !task._id) return console.log(`not found task ${index}!\n`)
   
   // show task status
-  const text = task.status !== DEFAULT_TODO_STATUS_GROUP.solved ? `⚬` : '●'
   const color = task.status === DEFAULT_TODO_STATUS_GROUP.solved ? '#00CD00' : '#E79627'
   console.log(`TASK ${index} is ${Chalk.hex(color)(task.status)}.`)
-  console.log(`${text} ${task.title}`)
+  console.log(`${Filter.symbolOfTask(task)} ${task.title}`)
   console.log(' ')
   
   // is over task

@@ -2,6 +2,7 @@ import { TodoItemLeveL } from '../types'
 
 export const DEFAULT_DATABASE = 'todo_list'
 export const ARCHIVE_DATABASE = 'todo_archive'
+export const CONFIG_DATABASE = 'todo_config'
 
 export const enum DEFAULT_TODO_STATUS_GROUP {
   unsolved = 'unsolved',
@@ -26,3 +27,6 @@ export const DEFAULT_TODO_LEVEL_COLORS = {
   urgent: '#DC3C44',
   instant: '#C72A39',
 }
+
+export const TIME_WARNING: number = 1800000
+

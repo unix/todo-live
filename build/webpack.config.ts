@@ -1,9 +1,10 @@
 import * as path from 'path'
 import * as fs from 'fs'
 import * as webpack from 'webpack'
+import * as webpackMerge from 'webpack-merge'
 import { promisify } from 'util'
 const lintConfig = require('../tslint.json')
-const readDir = promisify(fs.readdir)
+const readDir: (dir: string) => Promise<string[]> = promisify(fs.readdir)
 const manifest = require('../package.json')
 
 export type Externals = {
@@ -75,11 +76,15 @@ module.exports = (async() => {
       }),
     ],
     
-    entry: entriesMap,
-    
     externals: externals,
-    
   }
   
-  return base
+  const commander = {
+    entry: entriesMap,
+  }
+  const cron = {
+    entry: { cron: path.resolve(__dirname, '../src/cron.ts') },
+  }
+  
+  return [webpackMerge(base, commander), webpackMerge(base, cron)]
 })()

@@ -32,6 +32,12 @@ npm i -g todo-live
 
   <img src=".github/examples/add.png">
 
+- task timeout notify
+
+  if the task includes a time setting, you'll get a notice when the task is out of time.
+
+  <img src=".github/examples/notify.png">
+
 - show tasks (show / s)
 
   `todo show` / `todo show {index}` / `todo s`
@@ -68,9 +74,9 @@ npm i -g todo-live
     <img src=".github/examples/log.png">
   </details>
   
-  ### About
-  if you have any ideas and suggestions, please tell me [here](https://github.com/DhyanaChina/todo-live/issues/new).
+### About
+if you have any ideas and suggestions, please tell me [here](https://github.com/DhyanaChina/todo-live/issues/new).
   
-  ### LICENSE
-  **MIT**
+### LICENSE
+**MIT**
   
