@@ -30,13 +30,13 @@ npm i -g todo-live
 
   `todo add` / `todo a`
 
-  <img src=".github/examples/add.png">
+  <img width="450" height="150" src=".github/examples/add.png">
 
 - task timeout notify
 
   if the task includes a time setting, you'll get a notice when the task is out of time.
 
-  <img src=".github/examples/notify.png">
+  <img width="300" height="125"  src=".github/examples/notify.png">
 
 - show tasks (show / s)
 
