@@ -27,11 +27,11 @@ npm i -g todo-live
 
 ### Usage
 
-- use alias (optional)
+- **use alias (optional)**
 
   `alias t='todo'`
 
-- add a task (add / a)
+- **add a task (add / a)**
 
   `todo add` / `todo a`
 
@@ -49,13 +49,13 @@ npm i -g todo-live
 
   <img width="450" height="150" src=".github/examples/add.png">
 
-- task timeout notify
+- **task timeout notify**
 
   if the task includes a time setting, you'll get a notice when the task is out of time.
 
   <img width="300" height="125"  src=".github/examples/notify.png">
 
-- show tasks (show / s)
+- **show tasks (show / s)**
 
   `todo show` / `todo show {index}` / `todo s`
 
@@ -65,7 +65,7 @@ npm i -g todo-live
     <img width="450" height="150" src=".github/examples/show-2.png">
   </details>
 
-- solve a task, you can also take notes.
+- **solve a task, you can also take notes (do / d) **
 
   `todo do {index}`
   <details>
@@ -73,7 +73,7 @@ npm i -g todo-live
     <img width="450" height="200" src=".github/examples/do-1.png">
   </details>
 
-- remove a task
+- **remove a task (rm / r)**
 
   `todo rm {index}`
 
@@ -82,7 +82,7 @@ npm i -g todo-live
     <img width="450" height="110" src=".github/examples/rm.png">
   </details>
   
-- show task histroy
+- **show task histroy**
 
   `todo log`
 
