@@ -30,12 +30,12 @@ const questions = [{
   console.log(`you are creating a task (${pkg.name}@${pkg.version})\n`)
   const answer = await inquirer.prompt(questions)
   const cronTime: number = Filter.strToTime(answer.cronTime)
-  console.log(cronTime)
   const count: number = await store.count()
   await store.save(Object.assign(answer, {
     createAt: +new Date(),
     status: DEFAULT_TODO_STATUS_GROUP.default,
     index: count + 1,
+    description: answer.description || '',
     cronTime,
   }))
 
@@ -51,4 +51,5 @@ const questions = [{
   }
   
   console.log('\n task saved!')
+  process.exit(0)
 })()

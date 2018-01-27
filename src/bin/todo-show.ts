@@ -48,15 +48,15 @@ const showTask = async(index: number) => {
   try {
     const task: TodoItem = await store.findOne({ index: index })
     if (!task || !task._id) return await showError()
-    const time: string = task.cronTime ? new Date(task.cronTime).toISOString() : null
-    const tipsText = `TASK [${index}] ` + (time ? `(${time})` : '') + ':'
+    const time: string = Filter.date(task.cronTime)
+    const tipsText = `TASK [${index}] ` + (time ? `(limit: ${time})` : '') + ':'
     const title = Chalk.hex(Filter.colorOfTask(task))(`${Filter.symbolOfTask(task)} ${task.title}`)
     
     console.log(Chalk.hex('#E79627')(tipsText))
     console.log(title)
     console.log(`  ${task.description}`)
     if (task.notes && task.notes.length) {
-      console.log(Chalk.hex('#E79627')('TASK NOTES:'))
+      console.log(Chalk.hex('#E79627')('NOTES:'))
       task.notes.forEach(note => console.log(`  ${note}`))
     }
     console.log(' ')
@@ -66,7 +66,6 @@ const showTask = async(index: number) => {
 }
 
 ;(async() => {
-  // const threeDaysTime = +new Date() - (1000 * 60 * 60 * 24) * 3
   const list: TodoItem[] = await store.find({})
   
   // show error

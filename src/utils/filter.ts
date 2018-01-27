@@ -58,3 +58,10 @@ export const colorOfTask = (task: TodoItem): string => {
 export const symbolOfTask = (task: TodoItem): string => {
   return task.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
 }
+
+export const date = (time: number | string): string => {
+  const d: Date = new Date(Number(time))
+  if (!date || Number.isNaN(+d)) return null
+  const dateArr: string[] = d.toLocaleString().split(' ')
+  return `${dateArr[0].substr(5, 4)}/${dateArr[1].substr(0, 5)}`
+}
