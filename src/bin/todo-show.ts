@@ -1,7 +1,7 @@
 import Chalk from 'chalk'
 import * as commander from 'commander'
 import * as inquirer from 'inquirer'
-import Filter from '../utils/filter'
+import * as Filter from '../utils/filter'
 import { Store } from '../utils/store'
 import {
   DEFAULT_DATABASE, DEFAULT_TODO_LEVEL_COLORS,

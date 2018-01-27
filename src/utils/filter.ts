@@ -1,5 +1,5 @@
 
-export const pathFormat = (path: string): string => path.replace(/\\/g, '/')
+export const path = (path: string): string => path.replace(/\\/g, '/')
 
 export const strEllipsis = (str: string, len: number): string => {
   if (str.length <= len) return str

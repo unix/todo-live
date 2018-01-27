@@ -1,5 +1,5 @@
 import File from './file'
-import Filter from './filter'
+import * as Filter from './filter'
 
 export type StoreQueryValue = {
   // query key: $lt, $lte, $gt, $gte, $ne
