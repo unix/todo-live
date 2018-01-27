@@ -35,6 +35,18 @@ npm i -g todo-live
 
   `todo add` / `todo a`
 
+  1. you can set up the expiration time, the default unit is hourly
+
+      but you can still enter it like this:
+
+      `input "1 / 5m / 2d / 20.5m" => 1 hour / 5 minutes / 2 days / 20.5 minutes`
+
+  2. you can add bash script in details, just like: `bash[]`
+
+      the code will be executed at your specified time.
+
+      e.g. `bash[open https://www.google.com]`
+
   <img width="450" height="150" src=".github/examples/add.png">
 
 - task timeout notify
@@ -49,8 +61,8 @@ npm i -g todo-live
 
   <details>
     <summary><b>preview</b> </summary>
-    <img src=".github/examples/show-1.png">
-    <img src=".github/examples/show-2.png">
+    <img width="450" height="150" src=".github/examples/show-1.png">
+    <img width="450" height="150" src=".github/examples/show-2.png">
   </details>
 
 - solve a task, you can also take notes.
@@ -58,7 +70,7 @@ npm i -g todo-live
   `todo do {index}`
   <details>
     <summary><b>preview</b> </summary>
-    <img src=".github/examples/do-1.png">
+    <img width="450" height="200" src=".github/examples/do-1.png">
   </details>
 
 - remove a task
@@ -67,7 +79,7 @@ npm i -g todo-live
 
   <details>
     <summary><b>preview</b> </summary>
-    <img src=".github/examples/rm.png">
+    <img width="450" height="110" src=".github/examples/rm.png">
   </details>
   
 - show task histroy
@@ -76,7 +88,7 @@ npm i -g todo-live
 
   <details>
     <summary><b>preview</b> </summary>
-    <img src=".github/examples/log.png">
+    <img width="450" height="150" src=".github/examples/log.png">
   </details>
   
 ### About
