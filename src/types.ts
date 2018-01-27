@@ -25,3 +25,7 @@ export type TodoItem = {
 export type TodoLiveStore = {
   todoList: TodoItem[],
 }
+
+export type Config = {
+  pid?: number,
+}

@@ -1,8 +1,8 @@
 import Chalk from 'chalk'
 import * as commander from 'commander'
 import * as inquirer from 'inquirer'
-import * as Filter from '../utils/filter'
 import { Store } from '../utils/store'
+import * as Filter from '../utils/filter'
 import { DEFAULT_DATABASE, DEFAULT_TODO_STATUS_GROUP } from '../utils/constants'
 import { TodoItem } from '../types'
 const store = new Store(DEFAULT_DATABASE)

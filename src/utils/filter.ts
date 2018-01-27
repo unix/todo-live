@@ -8,25 +8,36 @@ export const strEllipsis = (str: string, len: number): string => {
   return `${str.substr(0, len)}...`
 }
 
-export const strToTime = (str: string) => {
+export const strToTime = (str: string): number => {
+  const timer = new Date()
+  const d = timer.getDay()
+  const h = timer.getHours()
+  const m = timer.getMinutes()
+  const s = timer.getSeconds()
+  const getChildTime = (time: number) => ~~(time % 1 * 60)
   // is hour, not include text
   if (!Number.isNaN(+str)) {
-    const h = new Date().getHours()
-    return new Date().setHours(+str + h)
+    const next = +str + h
+    timer.setHours(~~next)
+    return timer.setMinutes(getChildTime(next) + m)
   }
   
   // is minute
   if (/m/.test(str)) {
     str = str.replace(/m/g, '')
-    const m = new Date().getMinutes()
-    return Number.isNaN(+str) ? 0 : new Date().setMinutes(+str + m)
+    const next = Number(str) + m
+    timer.setMinutes(~~next)
+    timer.setSeconds(getChildTime(next) + s)
+    return Number.isNaN(+str) ? 0 : +timer
   }
   
   // is day
   if (/d/.test(str)) {
     str = str.replace(/d/g, '')
-    const d = new Date().getDay()
-    return Number.isNaN(+str) ? 0 : new Date().setDate(+str + d)
+    const next = +str + d
+    timer.setDate(~~next)
+    timer.setHours(getChildTime(next) + h)
+    return Number.isNaN(+str) ? 0 : +timer
   }
   
   // wrong
