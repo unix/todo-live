@@ -15,7 +15,7 @@ const questions = [{
   type: 'input',
   name: 'title',
   message: 'title of the task: ',
-  suffix: '(requreid)',
+  suffix: '(required)',
   validate: v => !!v,
 }, {
   type: 'input',
