@@ -13,6 +13,7 @@
 `todo-live` helps you build a simple list of tasks, you can change the state of the task and add notes. For developers, dealing with a task in a command line can help you to focus your attention.
 
 support macOS / Linux / Windows?. 
+
 (but i didn't test this on windows, i guess it might support.🤔)
 <img width="470" height="270" src=".github/examples/windows.jpg">
 
