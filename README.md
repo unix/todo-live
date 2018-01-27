@@ -65,7 +65,7 @@ npm i -g todo-live
     <img width="450" height="150" src=".github/examples/show-2.png">
   </details>
 
-- **solve a task, you can also take notes (do / d) **
+- **solve a task, you can also take notes (do / d)**
 
   `todo do {index}`
   <details>
