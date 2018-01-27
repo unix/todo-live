@@ -1,3 +1,5 @@
+import { TodoItem } from '../types'
+import { DEFAULT_TODO_LEVEL_COLORS, DEFAULT_TODO_STATUS_GROUP, TIME_WARNING } from './constants'
 
 export const path = (path: string): string => path.replace(/\\/g, '/')
 
@@ -29,4 +31,19 @@ export const strToTime = (str: string) => {
   
   // wrong
   return 0
+}
+
+export const colorOfTask = (task: TodoItem): string => {
+  const notSolve = (s: string) => s === DEFAULT_TODO_STATUS_GROUP.solving
+    || s === DEFAULT_TODO_STATUS_GROUP.unsolved
+  if (!task.cronTime || !notSolve(task.status)) return DEFAULT_TODO_LEVEL_COLORS.normal
+  
+  const time = +task.cronTime - +new Date()
+  if (time < 0) return DEFAULT_TODO_LEVEL_COLORS.instant
+  if (time < TIME_WARNING) return DEFAULT_TODO_LEVEL_COLORS.urgent
+  return DEFAULT_TODO_LEVEL_COLORS.normal
+}
+
+export const symbolOfTask = (task: TodoItem): string => {
+  return task.status === DEFAULT_TODO_STATUS_GROUP.unsolved ? '⚬' : '●'
 }

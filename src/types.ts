@@ -12,7 +12,7 @@ export type TodoItem = {
   createAt: string,
   title: string,
   description?: string,
-  level: TodoItemLeveL,
+  level?: TodoItemLeveL,
   status: TodoItemStatus,
   notes?: Note[],
   _id?: string,

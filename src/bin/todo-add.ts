@@ -6,17 +6,16 @@ import {
 const pkg = require('../../package.json')
 
 const questions = [{
-  type: 'list',
-  name: 'level',
-  message: 'Please select the priority of the task: ',
-  default: DEFAULT_TODO_LEVEL,
-  choices: [...DEFAULT_TODO_LEVEL_GROUP, new inquirer.Separator(' ')],
-}, {
   type: 'input',
   name: 'title',
   message: 'title of the task: ',
   suffix: '(required)',
   validate: v => !!v,
+}, {
+    type: 'input',
+    name: 'time',
+    message: 'time needed for this task: ',
+    suffix: '(press enter to skip)',
 }, {
   type: 'input',
   name: 'description',

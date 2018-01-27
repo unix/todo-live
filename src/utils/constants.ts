@@ -27,3 +27,5 @@ export const DEFAULT_TODO_LEVEL_COLORS = {
   urgent: '#DC3C44',
   instant: '#C72A39',
 }
+
+export const TIME_WARNING: number = 1800000
