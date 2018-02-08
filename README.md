@@ -70,27 +70,17 @@ npm i -g todo-live
   `todo do {index}`
   <details>
     <summary><b>preview</b> </summary>
-    <img width="450" height="200" src=".github/examples/do-1.png">
+    <img width="450" height="200" src=".github/examples/do.png">
   </details>
 
 - **remove a task (rm / r)**
 
   `todo rm {index}`
 
-  <details>
-    <summary><b>preview</b> </summary>
-    <img width="450" height="110" src=".github/examples/rm.png">
-  </details>
-  
 - **show task histroy**
 
   `todo log`
 
-  <details>
-    <summary><b>preview</b> </summary>
-    <img width="450" height="150" src=".github/examples/log.png">
-  </details>
-  
 ### About
 if you have any ideas and suggestions, please tell me [here](https://github.com/DhyanaChina/todo-live/issues/new).
   
