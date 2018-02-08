@@ -27,13 +27,9 @@ npm i -g todo-live
 
 ### Usage
 
-- **use alias (optional)**
+- **use alias (optional)** `alias t='todo'`
 
-  `alias t='todo'`
-
-- **add a task (add / a)**
-
-  `todo add` / `todo a`
+- **add a task (add / a)** `todo add` / `todo a`
 
   1. you can set up the expiration time, the default unit is hourly
 
@@ -55,9 +51,7 @@ npm i -g todo-live
 
   <img width="300" height="150"  src=".github/examples/notify.png">
 
-- **show tasks (show / s)**
-
-  `todo show` / `todo show {index}` / `todo s`
+- **show tasks (show / s)** `todo show` / `todo show {index}` / `todo s`
 
   <details>
     <summary><b>preview</b> </summary>
@@ -65,21 +59,15 @@ npm i -g todo-live
     <img width="450" height="150" src=".github/examples/show-2.png">
   </details>
 
-- **solve a task, you can also take notes (do / d)**
-
-  `todo do {index}`
+- **solve a task, you can also take notes (do / d)** `todo do {index}`
   <details>
     <summary><b>preview</b> </summary>
     <img width="450" height="200" src=".github/examples/do.png">
   </details>
 
-- **remove a task (rm / r)**
+- **remove a task (rm / r)** `todo rm {index}`
 
-  `todo rm {index}`
-
-- **show task histroy**
-
-  `todo log`
+- **show task histroy** `todo log`
 
 ### About
 if you have any ideas and suggestions, please tell me [here](https://github.com/DhyanaChina/todo-live/issues/new).
